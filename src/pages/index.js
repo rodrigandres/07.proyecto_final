@@ -1,0 +1,8 @@
+export { default as Home } from './Home'
+export { default as NotFound } from './NotFound'
+export { default as Contact } from './Contact'
+export { default as Perfil } from './Perfil'
+export { default as Tracking } from './Tracking'
+export { default as Trip } from './Trip'
+export { default as Login } from './auth/Login'
+export { default as Register } from './auth/Register'
