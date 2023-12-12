@@ -77,19 +77,19 @@ export default function Sidenav () {
   const [open, setOpen] = React.useState(true)
   const navigate = useNavigate()
 
-  const logoutUser = async () => {
+  const logoutUser = () => {
     try {
-      const isAuth = await localStorage.getItem('isAuth')
-      console.log(isAuth)
-      if (isAuth === 'true' || isAuth) {
-        localStorage.removeItem('isAuth')
+      const token = window.sessionStorage.getItem('token')
+
+      if (token) {
+        window.sessionStorage.removeItem('token')
         dispatch(unauthenticateUser())
         console.log('Logout exitoso')
       } else {
         console.log('El usuario no está autenticado')
       }
     } catch (error) {
-      console.error(error.response)
+      console.error(error)
     }
   }
 
@@ -164,7 +164,7 @@ export default function Sidenav () {
               <ListItemText primary='Tracking' sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding sx={{ display: 'block' }} onClick={() => { navigate('/perfil') }}>
+          <ListItem disablePadding sx={{ display: 'block' }} onClick={() => { navigate('/profile/:id') }}>
             <ListItemButton
               sx={{
                 minHeight: 48,

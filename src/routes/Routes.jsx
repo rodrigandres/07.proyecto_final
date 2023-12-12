@@ -8,8 +8,6 @@ const Routers = () => {
   const { isAuth, role } = useSelector((state) => state.auth)
 
   const PrivateRoutes = () => {
-    console.log(isAuth)
-
     return isAuth ? <Outlet /> : <Navigate to='/login' />
   }
 
@@ -30,7 +28,7 @@ const Routers = () => {
         <Route path='/' element={<Home />} />
         <Route path='/tracking' element={<Tracking />} />
         <Route path='/trip' element={<Trip />} />
-        <Route path='/perfil' element={<Perfil />} />
+        <Route path='/profile/:id' element={<Perfil />} />
       </Route>
 
       {/* Rutas restringidas */}

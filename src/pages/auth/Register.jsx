@@ -23,16 +23,23 @@ const Register = () => {
   const navigate = useNavigate()
 
   const onSubmit = async (values, props) => {
-    console.log(values)
-    console.log(props)
-    const register = await registerUser(values)
-    setTimeout(() => {
-      props.resetForm()
-      props.setSubmitting(false)
-    }, 2000)
-    if (register) {
-      localStorage.setItem('isAuth', register)
-      navigate('/perfil')
+    try {
+      console.log(values)
+      const register = await registerUser(values)
+
+      setTimeout(() => {
+        props.resetForm()
+        props.setSubmitting(false)
+      }, 1000)
+
+      if (register && register.token) {
+        window.sessionStorage.setItem('token', register)
+        navigate('/profile/:id')
+      } else {
+        console.error('No se recibió un token después del registro.')
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
 

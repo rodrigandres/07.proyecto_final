@@ -27,15 +27,16 @@ const Login = () => {
     e.preventDefault()
 
     try {
-      const isAuth = await onLogin(values)
-      if (isAuth) {
-        dispatch(authenticateUser())
-        localStorage.setItem('isAuth', isAuth)
-        navigate('/perfil')
+      const { token } = await onLogin(values)
+      if (token) {
+        const userId = token.id
+        console.warn('User ID LOGIN', token)
+        dispatch(authenticateUser({ token }))
+        window.sessionStorage.setItem('token', token)
+        navigate(`/profile/${userId}`)
       } else {
         navigate('/')
       }
-      console.warn(isAuth)
     } catch (error) {
       console.error('Login error:', error)
     }
