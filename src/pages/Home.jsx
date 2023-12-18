@@ -15,7 +15,6 @@ import AddShoppingCart from '@mui/icons-material/AddShoppingCart'
 import { useState, useEffect } from 'react'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import { useDispatch, useSelector } from 'react-redux'
-import { getGoogleMapsApiKey } from '../api/googleMapsApi'
 import { addToCart } from '../redux/slices/cartSlice'
 import { Link } from 'react-router-dom'
 import generateUniqueItemId from '../utils/uniqueId'
@@ -27,7 +26,7 @@ const Home = () => {
   const [fromLatLng, setFromLatLng] = useState(null)
   const [toLatLng, setToLatLng] = useState(null)
   const [distance, setDistance] = useState({})
-  const apiKey = getGoogleMapsApiKey()
+  const apiKey = import.meta.env.VITE_GOOGLE_KEY
   const isAuth = useSelector((state) => state.auth.isAuth)
   const dispatch = useDispatch()
 
@@ -101,11 +100,13 @@ const Home = () => {
       } catch (error) {
         console.error('Error al obtener coordenadas:', error)
       }
-    } Swal.fire({
-      icon: 'error',
-      title: 'Error al obtener coordenadas',
-      text: 'Debe ingresar ambas direcciones'
-    })
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al obtener coordenadas',
+        text: 'Debe ingresar ambas direcciones'
+      })
+    }
   }
 
   const handleAddToCart = () => {
