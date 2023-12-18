@@ -29,11 +29,9 @@ const Login = () => {
     try {
       const { token } = await onLogin(values)
       if (token) {
-        const userId = token.id
-        console.warn('User ID LOGIN', token)
         dispatch(authenticateUser({ token }))
         window.sessionStorage.setItem('token', token)
-        navigate(`/profile/${userId}`)
+        navigate('/profile/')
       } else {
         navigate('/')
       }
@@ -48,7 +46,7 @@ const Login = () => {
       <Grid container justifyContent='center' alignItems='center' style={{ height: '100vh' }}>
         <Grid item>
           <Paper elevation={10} style={paperStyle}>
-            <Box textAlign='center' mb={3}>
+            <Box textAlign='center' mb={3} sx={{ borderColor: '#1c2536' }}>
               <Avatar style={avatarStyle}><LockOutlinedIcon /></Avatar>
               <Typography variant='h5'>Sign In</Typography>
             </Box>

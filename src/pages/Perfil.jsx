@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Sidenav from '../components/sidenav'
+import Sidenav from '../components/Sidenav'
 import { useSelector } from 'react-redux'
 import { Box, Avatar, Container, Grid, Typography, Button, CircularProgress, Card, Divider, CardActions, CardContent } from '@mui/material'
 import { getUserProfile } from '../api/usersApi.js'

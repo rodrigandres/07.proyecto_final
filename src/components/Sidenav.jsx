@@ -2,7 +2,6 @@ import * as React from 'react'
 import { styled, useTheme } from '@mui/material/styles'
 import MuiDrawer from '@mui/material/Drawer'
 import List from '@mui/material/List'
-import CssBaseline from '@mui/material/CssBaseline'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import ListItem from '@mui/material/ListItem'
@@ -22,6 +21,7 @@ import {
 } from '../assets/material-icon'
 import { useDispatch } from 'react-redux'
 import { unauthenticateUser } from '../redux/slices/authSlice'
+import Swal from 'sweetalert2'
 
 const drawerWidth = 240
 
@@ -60,13 +60,17 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
+    height: '100vh',
+    backgroundColor: '#1c2536',
     ...(open && {
       ...openedMixin(theme),
-      '& .MuiDrawer-paper': openedMixin(theme)
+      '& .MuiDrawer-paper': openedMixin(theme),
+      backgroundColor: '#1c2536'
     }),
     ...(!open && {
       ...closedMixin(theme),
-      '& .MuiDrawer-paper': closedMixin(theme)
+      '& .MuiDrawer-paper': closedMixin(theme),
+      backgroundColor: '#1c2536'
     })
   })
 )
@@ -84,10 +88,18 @@ export default function Sidenav () {
       if (token) {
         window.sessionStorage.removeItem('token')
         dispatch(unauthenticateUser())
-        console.log('Logout exitoso')
+        Swal.fire({
+          icon: 'success',
+          title: 'Cierre de Sesión Exitoso',
+          text: 'Has cerrado sesión exitosamente'
+        })
       } else {
-        console.log('El usuario no está autenticado')
-      }
+        Swal.fire({
+          icon: 'warning',
+          title: 'Usuario no Autenticado',
+          text: 'El usuario no está autenticado.'
+        })
+      }navigate('/login')
     } catch (error) {
       console.error(error)
     }
@@ -95,7 +107,6 @@ export default function Sidenav () {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
       <Drawer variant='permanent' open={open}>
         <DrawerHeader>
           <IconButton onClick={() => setOpen(!open)}>
@@ -103,7 +114,7 @@ export default function Sidenav () {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List x={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
           <ListItem disablePadding sx={{ display: 'block' }} onClick={() => { navigate('/') }}>
             <ListItemButton
               sx={{
@@ -161,10 +172,12 @@ export default function Sidenav () {
               >
                 <ShareLocationIcon />
               </ListItemIcon>
-              <ListItemText primary='Tracking' sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+                primary='Tracking' sx={{ opacity: open ? 1 : 0 }}
+              />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding sx={{ display: 'block' }} onClick={() => { navigate('/profile/:id') }}>
+          <ListItem disablePadding sx={{ display: 'block' }} onClick={() => { navigate('/profile/') }}>
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -184,7 +197,7 @@ export default function Sidenav () {
               <ListItemText primary='Perfil' sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
-          <Divider sx={{ pt: 75 }} />
+          <Divider sx={{ pt: '61vh' }} />
           <ListItem disablePadding sx={{ display: 'block' }} onClick={logoutUser}>
             <ListItemButton
               sx={{

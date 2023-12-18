@@ -34,7 +34,7 @@ const Register = () => {
 
       if (register && register.token) {
         window.sessionStorage.setItem('token', register)
-        navigate('/profile/:id')
+        navigate('/profile/')
       } else {
         console.error('No se recibió un token después del registro.')
       }

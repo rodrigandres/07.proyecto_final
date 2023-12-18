@@ -2,7 +2,6 @@ import { Link, useLocation } from 'react-router-dom'
 import {
   AppBar,
   Button,
-  CssBaseline,
   Toolbar,
   Typography
 } from '@mui/material'
@@ -20,7 +19,6 @@ export default function Appbar () {
 
   return (
     <>
-      <CssBaseline />
       <AppBar position='static' color='default'>
         <Toolbar>
           <Typography variant='h6' color='inherit' noWrap sx={{ flexGrow: 1 }}>
@@ -28,9 +26,6 @@ export default function Appbar () {
           </Typography>
           <Button color={isActive('/')} component={Link} to='/'>
             Home
-          </Button>
-          <Button color={isActive('/services')} component={Link} to='/services'>
-            Services
           </Button>
           <Button color={isActive('/contact')} component={Link} to='/contact'>
             Contact
