@@ -23,7 +23,7 @@ const Tracking = () => {
     },
     {
       tracking_id: 2,
-      id_trip: 1,
+      id_trip: 2,
       fecha_estado: '2023-12-16 15:30:00',
       estado_actual: 'Entregado',
       descripcion_estado: 'El traslado ha sido entregado con éxito',

@@ -7,7 +7,7 @@ import { registerUser } from '../../api/authApi'
 import Appbar from '../../components/Appbar'
 
 const Register = () => {
-  const paperStyle = { padding: 20, width: 400, margin: '0 auto', marginTop: 200 }
+  const paperStyle = { padding: 20, width: 400, margin: '0 auto', marginTop: 100 }
   const headerStyle = { margin: 0 }
   const avatarStyle = { backgroundColor: '#1bbd7e' }
   const marginTop = { marginTop: 5 }

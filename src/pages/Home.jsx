@@ -2,7 +2,6 @@
 import Sidenav from '../components/Sidenav'
 import Appbar from '../components/Appbar'
 import {
-  Box,
   Card,
   CardContent,
   Grid,
@@ -99,15 +98,14 @@ const Home = () => {
       try {
         await getLatLng(fromLocation, 'ORIGIN')
         await getLatLng(toLocation)
-
-        console.log('Coordenadas de origen:', fromLatLng)
-        console.log('Coordenadas de destino:', toLatLng)
       } catch (error) {
         console.error('Error al obtener coordenadas:', error)
       }
-    } else {
-      console.log('Selecciona ambas ubicaciones antes de realizar la búsqueda.')
-    }
+    } Swal.fire({
+      icon: 'error',
+      title: 'Error al obtener coordenadas',
+      text: 'Debe ingresar ambas direcciones'
+    })
   }
 
   const handleAddToCart = () => {
@@ -138,9 +136,11 @@ const Home = () => {
 
   return (
     <>
-      {isAuth ? <Sidenav /> : <Appbar />}
-      <Box sx={{ display: ' ' }}>
-        <Grid container justifyContent='center' alignItems='center' style={{ marginTop: '16px', flex: 1, flexDirection: 'column' }}>
+      <Grid container>
+        <Grid item xs={isAuth ? 2 : 12}>
+          {isAuth ? <Sidenav /> : <Appbar />}
+        </Grid>
+        <Grid item xs={isAuth ? 10 : 12} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <Card elevation={5} style={{ marginTop: '16px', width: '100%', maxWidth: '700px' }}>
             <CardContent style={{ padding: '8px' }}>
               <GooglePlacesAutocomplete
@@ -188,14 +188,14 @@ const Home = () => {
               </CardActions>
               {fromLatLng !== null && (
                 <>
-                  <Container style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px' }}>
+                  <Container style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Typography variant='subtitle1' gutterBottom>
                       Distancia del Viaje: {distance?.text || 'Calculando...'}
                     </Typography>
                     <Typography variant='subtitle1' gutterBottom>
                       Valor del traslado: $ {(distance?.value * 4) || 'Calculando...'}
                     </Typography>
-                    <CardActions>
+                    <CardActions style={{ padding: 0 }}>
                       <Button
                         size='small'
                         variant='contained'
@@ -217,12 +217,14 @@ const Home = () => {
             </CardContent>
 
           </Card>
+
           {fromLatLng !== null && (
             <Card elevation={5} style={{ marginTop: '16px', width: '80%', height: 450 }}>
               <div id='map' style={{ width: '100%', height: '100%' }} />
-            </Card>)}
+            </Card>
+          )}
         </Grid>
-      </Box>
+      </Grid>
     </>
   )
 }

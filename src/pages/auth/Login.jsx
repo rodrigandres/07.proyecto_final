@@ -43,7 +43,7 @@ const Login = () => {
   return (
     <>
       <Appbar />
-      <Grid container justifyContent='center' alignItems='center' style={{ height: '100vh' }}>
+      <Grid container justifyContent='center' alignItems='center' style={{ height: '80vh' }}>
         <Grid item>
           <Paper elevation={10} style={paperStyle}>
             <Box textAlign='center' mb={3} sx={{ borderColor: '#1c2536' }}>
