@@ -7,7 +7,7 @@ export async function getUserProfile () {
   try {
     const state = store.getState()
     const USER_TOKEN = state.auth.token
-    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/profile`, {
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}api/profile`, {
       headers: {
         Authorization: `Bearer ${USER_TOKEN}` // Agregar el token a la cabeceras de la solicitud
       }
