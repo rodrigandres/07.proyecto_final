@@ -33,7 +33,7 @@ export async function onLogout () {
 // Función para verificar el token del usuario
 export async function verifyToken () {
   try {
-    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}api//verify`)
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}api/verify`)
     return response.data
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Error al verificar el token')
