@@ -32,41 +32,38 @@ const Tracking = () => {
   ]
 
   return (
-    <>
-      <Box sx={{ display: 'flex' }}>
-        <Sidenav />
-        <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
-          <Paper elevation={3} sx={{ padding: '20px', margin: '20px' }}>
-            <Typography variant='h4'>Detalles de Seguimiento</Typography>
-
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>N° Traslado</TableCell>
-                    <TableCell>Fecha de Estado</TableCell>
-                    <TableCell>Estado Actual</TableCell>
-                    <TableCell>Descripción del Estado</TableCell>
-                    <TableCell>Ubicación Actual</TableCell>
+    <Box sx={{ display: 'flex' }}>
+      <Sidenav />
+      <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
+        <Paper elevation={3} sx={{ padding: '20px', margin: '20px' }}>
+          <Typography variant='h4'>Detalles de Seguimiento</Typography>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>N° Traslado</TableCell>
+                  <TableCell>Fecha de Estado</TableCell>
+                  <TableCell>Estado Actual</TableCell>
+                  <TableCell>Descripción del Estado</TableCell>
+                  <TableCell>Ubicación Actual</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {trackingData.map((track) => (
+                  <TableRow key={track.id_trip}>
+                    <TableCell>{track.tracking_id}</TableCell>
+                    <TableCell>{track.fecha_estado}</TableCell>
+                    <TableCell>{track.estado_actual}</TableCell>
+                    <TableCell>{track.descripcion_estado}</TableCell>
+                    <TableCell>{track.ubicacion_actual}</TableCell>
                   </TableRow>
-                </TableHead>
-                <TableBody>
-                  {trackingData.map((track) => (
-                    <TableRow key={track.id_trip}>
-                      <TableCell>{track.tracking_id}</TableCell>
-                      <TableCell>{track.fecha_estado}</TableCell>
-                      <TableCell>{track.estado_actual}</TableCell>
-                      <TableCell>{track.descripcion_estado}</TableCell>
-                      <TableCell>{track.ubicacion_actual}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Paper>
-        </Box>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
       </Box>
-    </>
+    </Box>
   )
 }
 

@@ -15,9 +15,10 @@ import {
   ChevronRightIcon,
   DisplaySettingsIcon,
   MiscellaneousServicesIcon,
-  ShareLocationIcon,
-  FormatListNumberedIcon,
-  ExitToAppIcon
+  // ShareLocationIcon,
+  // FormatListNumberedIcon,
+  ExitToAppIcon,
+  ScreenSearchDesktopIcon
 } from '../assets/material-icon'
 import { useDispatch } from 'react-redux'
 import { unauthenticateUser } from '../redux/slices/authSlice'
@@ -131,7 +132,7 @@ export default function Sidenav () {
               <ListItemText primary='Services' sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding sx={{ display: 'block' }} onClick={() => { navigate('/trip') }}>
+          {/*  <ListItem disablePadding sx={{ display: 'block' }} onClick={() => { navigate('/trip') }}>
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -170,6 +171,28 @@ export default function Sidenav () {
               </ListItemIcon>
               <ListItemText
                 primary='Tracking' sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem> */}
+          <ListItem disablePadding sx={{ display: 'block' }} onClick={() => { navigate('/mySearch') }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 2.5
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : 'auto',
+                  justifyContent: 'center'
+                }}
+              >
+                <ScreenSearchDesktopIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary='My Search' sx={{ opacity: open ? 1 : 0 }}
               />
             </ListItemButton>
           </ListItem>

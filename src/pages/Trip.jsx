@@ -46,47 +46,45 @@ const Trip = () => {
   ]
 
   return (
-    <>
-      <Box sx={{ display: 'flex' }}>
-        <Sidenav />
-        <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
-          <Paper elevation={3} sx={{ padding: '20px', margin: '20px' }}>
-            <Typography variant='h4'>Detalles de los Traslados</Typography>
+    <Box sx={{ display: 'flex' }}>
+      <Sidenav />
+      <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
+        <Paper elevation={3} sx={{ padding: '20px', margin: '20px' }}>
+          <Typography variant='h4'>Detalles de los Traslados</Typography>
 
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Origen</TableCell>
-                    <TableCell>Destino</TableCell>
-                    <TableCell>Fecha de Solicitud</TableCell>
-                    <TableCell>Tipo de Carga</TableCell>
-                    <TableCell>Volumen Estimado</TableCell>
-                    <TableCell>Servicios Adicionales</TableCell>
-                    <TableCell>Numero de Articulos</TableCell>
-                    <TableCell>Correo</TableCell>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Origen</TableCell>
+                  <TableCell>Destino</TableCell>
+                  <TableCell>Fecha de Solicitud</TableCell>
+                  <TableCell>Tipo de Carga</TableCell>
+                  <TableCell>Volumen Estimado</TableCell>
+                  <TableCell>Servicios Adicionales</TableCell>
+                  <TableCell>Numero de Articulos</TableCell>
+                  <TableCell>Correo</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {tripData.map((trip) => (
+                  <TableRow key={trip.id}>
+                    <TableCell>{trip.origen}</TableCell>
+                    <TableCell>{trip.destino}</TableCell>
+                    <TableCell>{trip.fechaSolicitud}</TableCell>
+                    <TableCell>{trip.tipoCarga}</TableCell>
+                    <TableCell>{trip.volumenEstimado}</TableCell>
+                    <TableCell>{trip.serviciosAdicionales}</TableCell>
+                    <TableCell>{trip.numArticulos}</TableCell>
+                    <TableCell>{trip.emailCliente}</TableCell>
                   </TableRow>
-                </TableHead>
-                <TableBody>
-                  {tripData.map((trip) => (
-                    <TableRow key={trip.id}>
-                      <TableCell>{trip.origen}</TableCell>
-                      <TableCell>{trip.destino}</TableCell>
-                      <TableCell>{trip.fechaSolicitud}</TableCell>
-                      <TableCell>{trip.tipoCarga}</TableCell>
-                      <TableCell>{trip.volumenEstimado}</TableCell>
-                      <TableCell>{trip.serviciosAdicionales}</TableCell>
-                      <TableCell>{trip.numArticulos}</TableCell>
-                      <TableCell>{trip.emailCliente}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Paper>
-        </Box>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
       </Box>
-    </>
+    </Box>
   )
 }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import { Contact, Home, NotFound, Tracking, Trip, Perfil, Login, Register, Carrito } from '../pages/'
+import { Contact, Home, NotFound, Tracking, Trip, Perfil, Login, Register, MySearch } from '../pages/'
 
 const Routers = () => {
   const { isAuth, role } = useSelector((state) => state.auth)
@@ -22,7 +22,7 @@ const Routers = () => {
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
       <Route path='/contact' element={<Contact />} />
-      <Route path='/carrito' element={<Carrito />} />
+      <Route path='/mysearch' element={<MySearch />} />
 
       {/* Rutas privadas */}
       <Route element={<PrivateRoutes />}>
@@ -30,6 +30,8 @@ const Routers = () => {
         <Route path='/tracking' element={<Tracking />} />
         <Route path='/trip' element={<Trip />} />
         <Route path='/profile/' element={<Perfil />} />
+        <Route path='/mysearch' element={<MySearch />} />
+
       </Route>
 
       {/* Rutas restringidas */}

@@ -88,9 +88,9 @@ const Login = () => {
               </Button>
             </form>
             <Box mt={2} mb={1} textAlign='center'>
-              <Typography>
+              {/* <Typography>
                 <Link href='/notfound'>Forgot password?</Link>
-              </Typography>
+              </Typography> */}
               <Typography>
                 Do you have an account? <Link href='/register'>Sign Up</Link>
               </Typography>

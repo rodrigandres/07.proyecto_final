@@ -18,7 +18,7 @@ const Register = () => {
     phoneNumber: '',
     password: '',
     confirmPassword: '',
-    termsAndConditions: false
+    termsandConditions: ' '
   }
   const navigate = useNavigate()
 
@@ -90,10 +90,10 @@ const Register = () => {
                   helperText={<ErrorMessage name='confirmPassword' />}
                 />
                 <FormControlLabel
-                  control={<Field as={Checkbox} name='termsAndConditions' />}
+                  control={<Field as={Checkbox} name='termsandConditions' />}
                   label='I accept the terms and conditions.'
                 />
-                <FormHelperText><ErrorMessage name='termsAndConditions' /></FormHelperText>
+                <FormHelperText><ErrorMessage name='termsandConditions' /></FormHelperText>
                 <Button
                   type='submit' variant='contained' disabled={props.isSubmitting}
                   color='primary'

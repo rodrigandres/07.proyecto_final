@@ -11,7 +11,8 @@ import {
   Container
 }
   from '@mui/material'
-import AddShoppingCart from '@mui/icons-material/AddShoppingCart'
+import { AddShoppingCart } from '@mui/icons-material'
+import SaveIcon from '@mui/icons-material/Save'
 import { useState, useEffect } from 'react'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import { useDispatch, useSelector } from 'react-redux'
@@ -136,97 +137,96 @@ const Home = () => {
   }
 
   return (
-    <>
-      <Grid container>
-        <Grid item xs={isAuth ? 2 : 12}>
-          {isAuth ? <Sidenav /> : <Appbar />}
-        </Grid>
-        <Grid item xs={isAuth ? 10 : 12} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-          <Card elevation={5} style={{ marginTop: '16px', width: '100%', maxWidth: '700px' }}>
-            <CardContent style={{ padding: '8px' }}>
-              <GooglePlacesAutocomplete
-                apiKey={apiKey}
-                selectProps={{
-                  value: fromLocation,
-                  onChange: setFromLocation,
-                  placeholder: 'From Location',
-                  isClearable: true,
-                  components: {
-                    DropdownIndicator: false
-                  },
-                  styles: {
-                    control: (provided) => ({
-                      ...provided,
-                      backgroundColor: '#EEF0E5',
-                      marginTop: '20px'
-                    })
-                  }
-                }}
-              />
-              <GooglePlacesAutocomplete
-                apiKey={apiKey}
-                selectProps={{
-                  value: toLocation,
-                  onChange: setToLocation,
-                  placeholder: 'To Location',
-                  isClearable: true,
-                  components: {
-                    DropdownIndicator: false
-                  },
-                  styles: {
-                    control: (provided) => ({
-                      ...provided,
-                      backgroundColor: '#EEF0E5',
-                      marginTop: '20px'
-                    })
-                  }
-                }}
-              />
-              <CardActions style={{ justifyContent: 'center', marginTop: '16px' }}>
-                <Button variant='contained' color='primary' onClick={handleSearch}>
-                  Search
-                </Button>
-              </CardActions>
-              {fromLatLng !== null && (
-                <>
-                  <Container style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <Typography variant='subtitle1' gutterBottom>
-                      Distancia del Viaje: {distance?.text || 'Calculando...'}
-                    </Typography>
-                    <Typography variant='subtitle1' gutterBottom>
-                      Valor del traslado: $ {(distance?.value * 4) || 'Calculando...'}
-                    </Typography>
-                    <CardActions style={{ padding: 0 }}>
-                      <Button
-                        size='small'
-                        variant='contained'
-                        color='primary'
-                        startIcon={<AddShoppingCart />}
-                        onClick={handleAddToCart}
-                      >
-                        Añadir al Carrito
-                      </Button>
-                      <Link to='/carrito'>
-                        <Button size='small' variant='contained' color='primary' sx={{ margin: 2 }}>
-                          Ir al Carrito
-                        </Button>
-                      </Link>
-                    </CardActions>
-                  </Container>
-                </>
-              )}
-            </CardContent>
-
-          </Card>
-
-          {fromLatLng !== null && (
-            <Card elevation={5} style={{ marginTop: '16px', width: '80%', height: 450 }}>
-              <div id='map' style={{ width: '100%', height: '100%' }} />
-            </Card>
-          )}
-        </Grid>
+    <Grid container>
+      <Grid item xs={isAuth ? 2 : 12}>
+        {isAuth ? <Sidenav /> : <Appbar />}
       </Grid>
-    </>
+      <Grid item xs={isAuth ? 10 : 12} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <Card elevation={5} style={{ marginTop: '16px', width: '100%', maxWidth: '700px' }}>
+          <CardContent style={{ padding: '8px' }}>
+            <GooglePlacesAutocomplete
+              apiKey={apiKey}
+              selectProps={{
+                value: fromLocation,
+                onChange: setFromLocation,
+                placeholder: 'From Location',
+                isClearable: true,
+                components: {
+                  DropdownIndicator: false
+                },
+                styles: {
+                  control: (provided) => ({
+                    ...provided,
+                    backgroundColor: '#EEF0E5',
+                    marginTop: '20px'
+                  })
+                }
+              }}
+            />
+            <GooglePlacesAutocomplete
+              apiKey={apiKey}
+              selectProps={{
+                value: toLocation,
+                onChange: setToLocation,
+                placeholder: 'To Location',
+                isClearable: true,
+                components: {
+                  DropdownIndicator: false
+                },
+                styles: {
+                  control: (provided) => ({
+                    ...provided,
+                    backgroundColor: '#EEF0E5',
+                    marginTop: '20px'
+                  })
+                }
+              }}
+            />
+            <CardActions style={{ justifyContent: 'center', marginTop: '16px' }}>
+              <Button variant='contained' color='primary' onClick={handleSearch}>
+                Search
+              </Button>
+            </CardActions>
+            {fromLatLng !== null && (
+              <>
+                <Container style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Typography variant='subtitle1' gutterBottom>
+                    Distancia del Viaje: {distance?.text || 'Calculando...'}
+                  </Typography>
+                  <Typography variant='subtitle1' gutterBottom>
+                    Valor del traslado: $ {(distance?.value * 4) || 'Calculando...'}
+                  </Typography>
+                  <CardActions>
+                    <Button
+                      size='small'
+                      variant='contained'
+                      color='primary'
+                      startIcon={<SaveIcon />}
+                      onClick={handleAddToCart}
+                    >
+                      Save my Search
+                    </Button>
+                    <Link to='/mySearch'>
+                      <Button size='small' variant='contained' color='primary' sx={{ margin: 2 }}>
+                        <AddShoppingCart />
+                        Go to my search
+                      </Button>
+                    </Link>
+                  </CardActions>
+                </Container>
+              </>
+            )}
+          </CardContent>
+
+        </Card>
+
+        {fromLatLng !== null && (
+          <Card elevation={5} style={{ marginTop: '16px', width: '80%', height: 450 }}>
+            <div id='map' style={{ width: '100%', height: '100%' }} />
+          </Card>
+        )}
+      </Grid>
+    </Grid>
   )
 }
 
