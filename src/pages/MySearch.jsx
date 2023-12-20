@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { removeFromCart } from '../redux/slices/cartSlice'
+import { fetchQuotations, removeQuotation } from '../redux/slices/quotationSlice'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import Sidenav from '../components/Sidenav'
 import Appbar from '../components/Appbar'
@@ -8,7 +8,6 @@ import {
   TableCell,
   TableRow,
   Typography,
-  Grid,
   IconButton,
   Box,
   TableBody,
@@ -17,20 +16,26 @@ import {
 } from '@mui/material'
 
 const MySearch = () => {
-  const cartItems = useSelector((state) => state.cart.items)
-  console.log('cart items', cartItems)
+  const quotations = useSelector((state) => state.quotation.quotations)
   const dispatch = useDispatch()
   const isAuth = useSelector((state) => state.auth.isAuth)
+  const user = useSelector((state) => state.user.profile[0])
 
-  const handleRemoveFromCart = (itemId) => {
-    dispatch(removeFromCart(itemId))
+  useEffect(() => {
+    if (user && user.id) {
+      dispatch(fetchQuotations(user.id))
+    }
+  }, [dispatch, user])
+
+  const handleRemoveQuotation = (quotationId) => {
+    dispatch(removeQuotation(quotationId))
   }
 
   return (
     <Box sx={{ display: 'flex' }}>
       {isAuth ? <Sidenav /> : <Appbar />}
       <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
-        <Typography variant='h4'>Detalle de su Compra</Typography>
+        <Typography variant='h4' sx={{ mt: 4 }}>Mis Cotizaciones</Typography>
         <Table>
           <TableHead>
             <TableRow>
@@ -38,48 +43,31 @@ const MySearch = () => {
               <TableCell>Destino</TableCell>
               <TableCell>Distancia</TableCell>
               <TableCell>Valor del Traslado</TableCell>
-              <TableCell>Ubicación Actual</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {cartItems.map((item) => (
-              <TableRow key={item.id}>
-                <TableCell component='th' scope='row' align='center'>
-                  {item.name}
-                </TableCell>
-                <TableCell align='left'>
-                  {item.toName}
-                </TableCell>
-                <TableCell align='center'>
-                  {item.distanceText}
-                </TableCell>
-                <TableCell align='center'>
-                  ${item.distanceValue}
-                </TableCell>
+            {quotations.map((quotation) => (
+              <TableRow key={quotation.id}>
+                <TableCell>{quotation.name}</TableCell>
+                <TableCell>{quotation.toname}</TableCell>
+                <TableCell>{quotation.distancetext}</TableCell>
+                <TableCell>${quotation.distancevalue * 400}</TableCell>
                 <TableCell align='center'>
                   <IconButton
                     variant='contained'
                     color='secondary'
                     size='small'
-                    onClick={() => handleRemoveFromCart(item.id)}
+                    onClick={() => handleRemoveQuotation(quotation.id)}
                   >
                     <DeleteForeverIcon />
                   </IconButton>
                 </TableCell>
-                <TableCell align='center'>
-                  <Grid item xs={2} sm={2} style={{ display: 'flex', alignItems: 'center' }}>
-                    <Typography variant='body1' component='p' style={{ textAlign: 'center' }}>
-                        {item.quantity}
-                      </Typography>
-                  </Grid>
-                </TableCell>
-                <TableCell align='center'>
-                  {item.availableQuantity}
-                </TableCell>
+                <TableCell align='center' />
               </TableRow>
             ))}
           </TableBody>
         </Table>
+
       </Box>
     </Box>
   )

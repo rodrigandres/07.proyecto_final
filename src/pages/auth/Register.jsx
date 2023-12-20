@@ -24,7 +24,6 @@ const Register = () => {
 
   const onSubmit = async (values, props) => {
     try {
-      console.log(values)
       const register = await registerUser(values)
 
       setTimeout(() => {

@@ -20,6 +20,7 @@ import { addToCart } from '../redux/slices/cartSlice'
 import { Link } from 'react-router-dom'
 import generateUniqueItemId from '../utils/uniqueId'
 import Swal from 'sweetalert2'
+import { saveQuotation, submitQuotationToBackend, fetchQuotations } from '../redux/slices/quotationSlice'
 
 const Home = () => {
   const [fromLocation, setFromLocation] = useState(null)
@@ -30,6 +31,7 @@ const Home = () => {
   const apiKey = import.meta.env.VITE_GOOGLE_KEY
   const isAuth = useSelector((state) => state.auth.isAuth)
   const dispatch = useDispatch()
+  const user = useSelector((state) => state.user.profile[0])
 
   useEffect(() => {
     if (fromLatLng !== null) {
@@ -110,18 +112,23 @@ const Home = () => {
     }
   }
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async (userId, newItem) => {
     if (distance?.value) {
       const newItem = {
         id: generateUniqueItemId(),
-        name: fromLatLng.name,
-        label: fromLatLng.label,
-        toName: toLatLng.name,
-        toLabel: toLatLng.label,
         distanceText: distance?.text,
-        distanceValue: distance?.value * 4 || 0
+        distanceValue: distance?.value * 4 || 0,
+        label: fromLatLng.label,
+        name: fromLatLng.name,
+        toLabel: toLatLng.label,
+        toName: toLatLng.name,
+        userId: user.id,
+        userEmail: user.email
       }
+
       dispatch(addToCart(newItem))
+      dispatch(saveQuotation(newItem))
+      dispatch(submitQuotationToBackend(newItem))
       Swal.fire({
         icon: 'success',
         title: 'Añadido al carrito',
@@ -132,6 +139,18 @@ const Home = () => {
         icon: 'error',
         title: 'Error',
         text: 'No se puede añadir al carrito, valor del traslado no disponible.'
+      })
+    }
+  }
+
+  const handleGoToMySearch = () => {
+    if (user && user.id) {
+      dispatch(fetchQuotations(user.id))
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No hay cotizaciones para mostrar'
       })
     }
   }
@@ -207,7 +226,7 @@ const Home = () => {
                       Save my Search
                     </Button>
                     <Link to='/mySearch'>
-                      <Button size='small' variant='contained' color='primary' sx={{ margin: 2 }}>
+                      <Button size='small' variant='contained' color='primary' sx={{ margin: 2 }} onClick={handleGoToMySearch}>
                         <AddShoppingCart />
                         Go to my search
                       </Button>

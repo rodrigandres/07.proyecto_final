@@ -1,35 +1,33 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidenav from '../components/Sidenav'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Box, Avatar, Container, Grid, Typography, Button, CircularProgress, Card, Divider, CardActions, CardContent } from '@mui/material'
 import { getUserProfile } from '../api/usersApi.js'
+import { setUserProfile } from '../redux/slices/userSlice.js'
 
 const Perfil = () => {
-  const [userProfile, setUserProfile] = useState(null)
-  const userToken = useSelector(state => state.auth.token)
+  const dispatch = useDispatch()
+  const userProfile = useSelector((state) => state.user.profile)
+  const userToken = useSelector((state) => state.auth.token)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      try {
-        const profile = await getUserProfile(userToken)
-
-        setUserProfile(profile)
-        setLoading(false)
-
-        if (profile) {
-          // console.log(`Hola, ${profile.nombre}!`)
+      if (userToken) {
+        try {
+          const profile = await getUserProfile(userToken)
+          dispatch(setUserProfile(profile))
+          setLoading(false)
+        } catch (error) {
+          console.error(error.message)
         }
-      } catch (error) {
-        console.error(error.message)
-        setLoading(false)
       }
     }
 
     if (userToken) {
       fetchUserProfile()
     }
-  }, [userToken])
+  }, [userToken, dispatch])
 
   return (
     <Box sx={{ display: 'flex' }}>
