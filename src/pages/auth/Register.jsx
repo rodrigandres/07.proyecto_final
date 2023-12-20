@@ -5,6 +5,7 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import { registerValidationSchema } from '../../utils/formValidation'
 import { registerUser } from '../../api/authApi'
 import Appbar from '../../components/Appbar'
+import Swal from 'sweetalert2'
 
 const Register = () => {
   const paperStyle = { padding: 20, width: 400, margin: '0 auto', marginTop: 100 }
@@ -26,19 +27,32 @@ const Register = () => {
     try {
       const register = await registerUser(values)
 
-      setTimeout(() => {
-        props.resetForm()
-        props.setSubmitting(false)
-      }, 1000)
-
       if (register && register.token) {
-        window.sessionStorage.setItem('token', register)
+        window.sessionStorage.setItem('token', register.token)
         navigate('/profile/')
+        Swal.fire({
+          icon: 'success',
+          title: 'Registro Exitoso',
+          text: 'Tu cuenta ha sido creada exitosamente.'
+        })
       } else {
-        console.error('No se recibió un token después del registro.')
+        Swal.fire({
+          icon: 'error',
+          title: 'Error de Registro',
+          text: 'No se pudo completar el registro.'
+        })
       }
+
+      props.resetForm()
+      props.setSubmitting(false)
     } catch (error) {
       console.error(error)
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Ocurrió un error durante el registro.'
+      })
+      props.setSubmitting(false)
     }
   }
 

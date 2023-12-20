@@ -6,6 +6,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { onLogin } from '../../api/authApi'
 import { authenticateUser } from '../../redux/slices/authSlice'
 import Appbar from '../../components/Appbar'
+import Swal from 'sweetalert2'
 
 const Login = () => {
   const paperStyle = { padding: 20, width: 350, margin: 'auto' }
@@ -27,16 +28,31 @@ const Login = () => {
     e.preventDefault()
 
     try {
-      const { token } = await onLogin(values)
-      if (token) {
-        dispatch(authenticateUser({ token }))
-        window.sessionStorage.setItem('token', token)
+      const response = await onLogin(values)
+      if (response.token) {
+        dispatch(authenticateUser({ token: response.token }))
+        window.sessionStorage.setItem('token', response.token)
         navigate('/profile/')
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Inicio de sesión exitoso',
+          text: 'Has iniciado sesión correctamente.'
+        })
       } else {
-        navigate('/')
+        Swal.fire({
+          icon: 'info',
+          title: 'Información',
+          text: '401 Unauthorized: Token Inválido o Expirado'
+        })
       }
     } catch (error) {
       console.error('Login error:', error)
+      Swal.fire({
+        icon: 'error',
+        title: 'Error de Inicio de Sesión',
+        text: 'Contraseña y/o email inválido.'
+      })
     }
   }
 
